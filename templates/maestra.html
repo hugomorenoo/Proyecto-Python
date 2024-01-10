@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100vh;
+    }
+
+    .main-container {
+        display: grid;
+        grid-template-rows: 100px auto 50px;
+        grid-template-columns: 50px auto auto;
+        grid-template-areas: "nav header header"
+                             "nav contenido contenido"
+                             "nav footer footer";
+        height: 100%;
+    }
+
+    #nav{
+        grid-area: nav;
+        height: 100%;
+        background-color: #BA2D0B;
+        transition-property: all;
+        transition-duration: .4s;
+        z-index: 2;
+    }
+
+    .nav-in{
+        width: 100%;
+    }
+
+    .nav-in a{
+        opacity: 0;
+    }
+
+    .nav-out{
+        width: 200px;
+        box-shadow: 2px 0 4px rgba(0,0,0,.25);
+    }
+
+    .nav-out a{
+        opacity: 1;
+    }
+
+    #nav ul{
+        display: flex;
+        flex-direction: column;
+        margin-top: 60px;
+        list-style-type: none;
+    }
+
+    #nav ul li{
+        margin-bottom: 50px;
+    }
+
+    a:hover{
+        color:black;
+    }
+
+    a{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+    .header{
+        grid-area: header;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1em;
+        width: 100%;
+    }
+
+    .contenido {
+        grid-area: contenido;
+        width: 100%;
+        overflow-y: auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: auto;
+        padding: 1em;
+    }
+
+    .footer{
+        grid-area: footer;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #BA2D0B;
+        color: white;
+    }
+</style>
+{% block style %} {% endblock %}
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1>{% block header %} {% endblock %}</h1>
+        </header>
+        <div id="nav" class="nav-in">
+            <ul>
+                <li> <a href="/"> Inicio </a></li>
+                <li> <a href="/alta"> Alta </a></li>
+            </ul>
+        </div>
+        <div class="contenido">
+            {% block contenido %} {% endblock %}
+        </div>
+        <footer class="footer">
+            Hugo Moreno Fernández
+        </footer>
+    </div>
+    <script> 
+        var div = document.getElementById('nav');
+
+        div.addEventListener('mouseover', function() {
+            div.classList.add('nav-out');
+        });
+
+        div.addEventListener('mouseout', function() {
+            div.classList.remove('nav-out');
+        });
+    </script>
+    {% block script %} {% endblock %}
+</body>
+</html>

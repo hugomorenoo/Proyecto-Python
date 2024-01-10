@@ -1,0 +1,8 @@
+CREATE TABLE platos (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    precio FLOAT NOT NULL,
+    tipo VARCHAR(100) NOT NULL,
+    imagen VARCHAR(100) NOT NULL,
+    imagen_blob BLOB
+);

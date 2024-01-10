@@ -1,0 +1,114 @@
+{% extends "maestra.html" %}
+{% block title %}
+    Editar Plato
+{% endblock %}
+{% block header %}
+    Editar Plato
+{% endblock %}
+{% block style %}
+  <style>
+    h1 {
+      text-align: center;
+      color: #c0392b;
+    }
+    .error {
+      background-color: red;
+      width: 90%;
+      border-radius: 8px;
+      opacity: .7;
+      color: white;
+      padding: 1em;
+    }
+    form {
+      max-width: 400px;
+      margin-top: 5px;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label,
+    select,
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    input[type="submit"] {
+      display: block;
+      width: calc(100% - 10px);
+      margin-bottom: 15px;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    select {
+      border: 1px solid #ccc;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="submit"] {
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background-color: #c0392b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    img{
+        height: 100px;
+        width: 100px;
+        margin: auto;
+    }
+    #foto{
+        display: none;
+    }
+  </style>
+{% endblock %}
+{% block contenido %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('editar_plato', id=plato.id) }}" method="post" enctype="multipart/form-data">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ plato.nombre }}" required>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" step="0.01" value="{{ plato.precio }}" required>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="Entrante" {% if plato.tipo == 'Entrante' %}selected{% endif %}>Entrante</option>
+            <option value="Principal" {% if plato.tipo == 'Principal' %}selected{% endif %}>Principal</option>
+            <option value="Postre" {% if plato.tipo == 'Postre' %}selected{% endif %}>Postre</option>
+        </select>
+
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*">
+
+        <input type="submit" value="Guardar cambios">
+        <div id='previsualizado'>
+            <img id='foto'>
+          </div>
+    </form>
+{% endblock %}
+{% block script %} 
+<script>
+    var imagen = document.getElementById('imagen');
+    imagen.onchange = function() {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("foto").src = e.target.result;
+            document.getElementById("foto").style.display = "block";
+            console.log(e.target);
+        };
+        reader.readAsDataURL(this.files[0]);
+    };
+</script>
+{% endblock %}

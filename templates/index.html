@@ -1,0 +1,69 @@
+{% extends "maestra.html" %}
+    {% block title %}
+        Inicio
+    {% endblock %}
+    {% block header %}
+        Página index
+    {% endblock %}
+    {% block style %}
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 90%;
+                height: auto;
+            }
+
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #FF6347;
+                color: white;
+            }
+
+            td:nth-child(odd) {
+                background-color: #FFE4C4; 
+            }
+
+            td:nth-child(even) {
+                background-color: white;
+            }
+            img{
+                height: 70px;
+                width: 100px;
+            }
+            table a{
+                color: black;
+            }
+            a:hover{
+                color: red;
+            }
+        </style>
+    {% endblock %}
+    {% block contenido %}
+        <table>
+            <tr>
+                <th>NOMBRE</th>
+                <th>PRECIO</th>
+                <th>TIPO</th>
+                <th>IMAGEN</th>
+                <th>RUTA</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+            {% for plato in platos %}
+            <tr>
+                <td>{{plato.nombre}}</td>
+                <td>{{plato.precio}}</td>
+                <td>{{plato.tipo}}</td>
+                <td><img src="{{ url_for('mostrar_imagenBlob', id_plato=plato.id) }}" width="100px"></td>
+                <td>{{plato.imagen}}</td>
+                <td><a href="{{ url_for('editar_plato', id=plato.id) }}">Editar</a></td>
+                <td><a href="{{ url_for('borrar_plato', id=plato.id) }}" onclick="return confirm('¿Estás seguro de que quieres borrar este plato?')">Borrar</a></td>                
+            </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}

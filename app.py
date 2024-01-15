@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file, url_for, request, redirect, flash
+from flask import render_template, send_file, url_for, request, redirect, flash
 from database import app, db
 import io
 from datetime import datetime
